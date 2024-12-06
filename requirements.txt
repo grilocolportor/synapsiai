@@ -1,0 +1,12 @@
+fastapi
+pydantic
+langchain-core
+langchain-ollama
+langchain-openai
+langchain-huggingface
+langchain-community
+langchain
+python-dotenv
+uvicorn
+chromadb
+numpy
