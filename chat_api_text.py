@@ -70,7 +70,7 @@ def model_hf_hub(model="meta-llama/Meta-Llama-3-8B-Instruct", temperature=0.1):
 def model_openai(model="gpt-4o-mini", temperature=0.1):
     return ChatOpenAI(model=model, temperature=temperature)
 
-def model_ollama(model="phi3", temperature=0.1):
+def model_ollama(model="phi3", temperature=0.7):
     return ChatOllama(model=model, temperature=temperature)
 
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
@@ -87,6 +87,16 @@ vectorstore = Chroma.from_documents(
 # Exemplo de recuperação de embedding
 sample_embedding = vectorstore.similarity_search("Exemplo de consulta", k=1)[0]
 print(sample_embedding)
+
+def generate_prompt(user_query, chat_history):
+    prompt = (
+        "Responda à pergunta do usuário de forma breve e direta. "
+        "Aqui está o contexto da conversa:\n"
+    )
+    prompt += "\n".join([f"{msg['message']} - {msg['content']}" for msg in chat_history])
+    prompt += f"\nPergunta do usuário: {user_query}\nResposta:"
+    return prompt
+
 
 # Generate response
 def model_response(user_query, chat_history, model_class):
